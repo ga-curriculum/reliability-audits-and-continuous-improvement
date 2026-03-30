@@ -11,26 +11,28 @@ By the end of this session, learners will be able to:
 
 ## Session Pacing Guide (120 Minutes total)
 
-| Duration   | Segment                    | Instructor Action                                                                                                                                                                                                                 |
-|:-----------|:---------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **20 min** | **The Reliability Audit**  | Discuss the shift from reactive incident response to proactive chaos engineering. Explain the continuous improvement cycle and the blameless post-mortem culture.                                                                 |
-| **40 min** | **Chaos Mesh Demo**        | Live demonstration: Deploy a simple pod to Minikube. Use Chaos Mesh to inject a network delay or pod kill. Show how to capture the metrics during the simulated outage.                                                           |
-| **60 min** | **Lab: Failure Injection** | Facilitate the Failure Injection Exercise. Guide learners to simulate downtime with Chaos Mesh and document recovery results. Ensure they test resilience and learn how to strengthen fault tolerance in production environments. |
+**Pre-Session Checklist:** Start Minikube and install Chaos Mesh via Helm at least 15 minutes before the session begins to ensure the daemon is running before the live demo.
+
+| Duration   | Segment                    | Instructor Action                                                                                                                                                                                                                                                                                                                                   |
+|:-----------|:---------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **20 min** | **The Reliability Audit**  | **Hook:** "How many of you have run a fire drill? That is what we are doing today. We are setting the building on fire — in a controlled way — to verify the escape routes work." Discuss the shift from reactive incident response to proactive chaos engineering. Explain the continuous improvement cycle and the blameless post-mortem culture. |
+| **40 min** | **Chaos Mesh Demo**        | Live demonstration: Deploy a simple pod to Minikube. Use Chaos Mesh to inject a network delay or pod kill. Show how to capture the metrics during the simulated outage.                                                                                                                                                                             |
+| **60 min** | **Lab: Failure Injection** | Facilitate the Failure Injection Exercise. Guide learners to simulate downtime with Chaos Mesh and document recovery results. Ensure they test resilience and learn how to strengthen fault tolerance in production environments.                                                                                                                   |
+
 
 ---
 
 ## Delivery Notes & Teaching Tips
 
 ### 1. Blameless Culture & Proactive Engineering
-* **Simplifying Concepts:** 
-  
-  Frame a reliability audit as a "fire drill" for systems. We don't wait for a fire to find out if the alarm works. We test it proactively.
+* **Simplifying Concepts:** Frame a reliability audit as a "fire drill" for systems. We don't wait for a fire to find out if the alarm works. We test it proactively.
 
-* **Learner Context:** 
-  
-  Emphasize that continuous improvement relies on psychological safety. If uncovering a system vulnerability leads to punishment, engineers will hide vulnerabilities. 
+* **Learner Context:** Emphasize that continuous improvement relies on psychological safety. If uncovering a system vulnerability leads to punishment, engineers will hide vulnerabilities.
 
-### 2. Visualizing Chaos Engineering
+### 2. Connecting Past Labs to Current Audits
+Explicitly connect the chaos experiments to incidents students have previously analysed. Explain that a pod kill experiment tests the failover mechanisms built during the Load Balancing lab, while a network delay experiment simulates the timeout patterns that caused long detection gaps during the Incident Response lab.
+
+### 3. Visualizing Chaos Engineering
 Draw or display how Chaos Mesh interacts with the Kubernetes cluster to validate reliability:
 
 ```mermaid
@@ -46,6 +48,7 @@ graph TD
     style F fill:#d4edda,stroke:#28a745,stroke-width:2px;
 ```
 
+
 ---
 
 ## Common Student Issues & Solutions
@@ -56,6 +59,7 @@ graph TD
 | **Failure Injection has no effect**   | The `selector` in the Chaos Mesh YAML does not match the labels of the target AI application pod. | Guide the student to compare `kubectl get pods --show-labels` with the `labelSelectors` defined in their `PodChaos` or `NetworkChaos` YAML file.                     |
 | **System does not recover**           | The learner killed a pod that was not managed by a ReplicaSet or Deployment (e.g., a bare Pod).   | Explain that Kubernetes only auto-heals pods managed by controllers. Have them wrap their pod in a Deployment YAML and try the experiment again.                     |
 | **Metrics are missing or flat**       | Minikube's metrics-server is disabled, or the historical data window is too narrow.               | Have the student enable the add-on: `minikube addons enable metrics-server`. Ensure they wait 1-2 minutes for data to populate before starting the chaos experiment. |
+
 
 ---
 
