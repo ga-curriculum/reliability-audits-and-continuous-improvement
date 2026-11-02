@@ -148,9 +148,9 @@ graph LR
 
 > [!NOTE]
 >
-> [Lab: **Failure Injection Exercise**](https://git.generalassemb.ly/ai-systems-engineering-reliability/lab-15-failure-injection-exercise)
+> [Lab: **Failure Injection Exercise**](https://github.com/ga-curriculum/lab-15-failure-injection-exercise)
 > 
-> **Note**: Please refer to the dedicated [Lab Guide](https://git.generalassemb.ly/ai-systems-engineering-reliability/lab-15-failure-injection-exercise)
+> **Note**: Please refer to the dedicated [Lab Guide](https://github.com/ga-curriculum/lab-15-failure-injection-exercise)
  for full instructions, architectural constraints, and deliverables.
 
 
